@@ -18,7 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _showResult('');
   }
@@ -66,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           icon: const Icon(Icons.search),
         ),
-        hintText: '영화제목을 입력하세요',
+        hintText: '검색',
       ),
     );
   }
@@ -84,21 +83,13 @@ class _HomeScreenState extends State<HomeScreen> {
         return Column(
           children: [
             GestureDetector(
-              child: Image.network('https://image.tmdb.org/t/p/original' +
-                  _movies[index].posterPath),
+              child: Image.network(_movies[index].posterUrl),
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => InformationScreen(
-                      title: _movies[index].title,
-                      overView: _movies[index].overView,
-                      posterPath: _movies[index].posterPath,
-                      backdropPath: _movies[index].backdropPath,
-                      releaseDate: _movies[index].releaseDate,
-                      voteAverage: _movies[index].voteAverage,
-                      voteCount: _movies[index].voteCount,
-                    ),
+                    builder: (context) =>
+                        InformationScreen(movie: _movies[index]),
                   ),
                 );
               },
