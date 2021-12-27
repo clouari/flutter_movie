@@ -38,8 +38,23 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blueGrey,
       appBar: AppBar(
         title: const Text('영화 정보 검색기'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
+              );
+              // reset 아이콘 눌렀을 때에는 검색페이지로 다시 돌아오게 함.
+            },
+            icon: const Icon(
+              Icons.restart_alt_outlined,
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -99,7 +114,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Text(
               _movies[index].title,
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
           ],
         );
