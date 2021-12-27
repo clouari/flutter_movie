@@ -7,6 +7,8 @@ class Movie {
   final num voteAverage;
   final int voteCount;
 
+  String get posterUrl => 'https://image.tmdb.org/t/p/original' + posterPath;
+
   Movie({
     required this.title,
     required this.overView,
