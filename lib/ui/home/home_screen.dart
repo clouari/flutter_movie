@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_movie/data/movie_api.dart';
 import 'package:flutter_movie/model/movie.dart';
@@ -51,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
               // reset 아이콘 눌렀을 때에는 검색페이지로 다시 돌아오게 함.
             },
             icon: const Icon(
-              Icons.restart_alt_outlined,
+              Icons.settings_backup_restore_outlined,
             ),
           ),
         ],
@@ -95,33 +97,86 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       itemCount: _movies.length,
       itemBuilder: (context, index) {
-        return Column(
-          children: [
-            GestureDetector(
-              child: Image.network(_movies[index].posterUrl),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        InformationScreen(movie: _movies[index]),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Text(
-              _movies[index].title,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+        return InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InformationScreen(
+                  movie: _movies[index],
+                ),
               ),
-            ),
-          ],
+            );
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Flexible(
+                flex: 10,
+                fit: FlexFit.tight,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: _movies[index].posterPath.isEmpty
+                      ? Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Text(
+                            'no image',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
+                      : Image.network(
+                          _movies[index].posterUrl,
+                          fit: BoxFit.cover,
+                        ),
+                ),
+              ),
+              Flexible(
+                flex: 2,
+                fit: FlexFit.tight,
+                child: Center(
+                  child: Text(
+                    _movies[index].title,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        overflow: TextOverflow.fade),
+                  ),
+                ),
+              )
+            ],
+          ),
         );
+        // return Column(
+        //   children: [
+        //     GestureDetector(
+        //       child: Image.network(_movies[index].posterUrl),
+        //       onTap: () {
+        //         Navigator.push(
+        //           context,
+        //           MaterialPageRoute(
+        //             builder: (context) =>
+        //                 InformationScreen(movie: _movies[index]),
+        //           ),
+        //         );
+        //       },
+        //     ),
+        //     const SizedBox(
+        //       height: 10,
+        //     ),
+        //     Text(
+        //       _movies[index].title,
+        //       style: const TextStyle(
+        //         fontSize: 12,
+        //         fontWeight: FontWeight.bold,
+        //         color: Colors.white,
+        //       ),
+        //     ),
+        //   ],
+        // );
       },
     );
   }
