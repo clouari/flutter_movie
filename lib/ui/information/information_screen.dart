@@ -1,126 +1,123 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_movie/model/movie.dart';
 
 class InformationScreen extends StatelessWidget {
-  final String title;
-  final String overView;
-  final String posterPath;
-  final String? backdropPath;
-  final String releaseDate;
-  final num voteAverage;
-  final int voteCount;
+  final Movie movie;
 
   const InformationScreen({
     Key? key,
-    required this.title,
-    required this.overView,
-    required this.posterPath,
-    required this.backdropPath,
-    required this.releaseDate,
-    required this.voteAverage,
-    required this.voteCount,
+    required this.movie,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: Text(movie.title),
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Padding(
-            padding: const EdgeInsets.only(top: 16, bottom: 16),
+            padding: const EdgeInsets.only(top: 20, bottom: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  movie.title,
                   style: const TextStyle(
-                      fontSize: 30, fontWeight: FontWeight.bold),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16, bottom: 16),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 210,
-                        height: 280,
-                        child: Image.network(
-                          'https://image.tmdb.org/t/p/original' +
-                              backdropPath.toString(),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '개봉일 ' + releaseDate,
-                              style: const TextStyle(fontSize: 12),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 65,
-                                  child: TextButton.icon(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.check,
-                                      size: 12.0,
-                                      color: Colors.white,
-                                    ),
-                                    label: Text(
-                                      voteCount.toString(),
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: Colors.blue),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                SizedBox(
-                                  width: 65,
-                                  child: TextButton.icon(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.star,
-                                      size: 12.0,
-                                      color: Colors.white,
-                                    ),
-                                    label: Text(
-                                      voteAverage.toString(),
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: Colors.blue),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                    fontSize: 30,
+                    color: Colors.indigo,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
-                  overView,
-                  maxLines: 7,
-                  overflow: TextOverflow.ellipsis,
+                Flexible(
+                  fit: FlexFit.tight,
+                  flex: 4,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 16, bottom: 16),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: double.infinity,
+                            child: Image.network(movie.posterUrl),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '개봉일 ' + movie.releaseDate,
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 70,
+                                    child: TextButton.icon(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        Icons.check,
+                                        size: 12.0,
+                                        color: Colors.white,
+                                      ),
+                                      label: Text(
+                                        movie.voteCount.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      style: TextButton.styleFrom(
+                                          backgroundColor: Colors.blue),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  SizedBox(
+                                    width: 65,
+                                    child: TextButton.icon(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        Icons.star,
+                                        size: 12.0,
+                                        color: Colors.white,
+                                      ),
+                                      label: Text(
+                                        movie.voteAverage.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      style: TextButton.styleFrom(
+                                          backgroundColor: Colors.blue),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Flexible(
+                  fit: FlexFit.tight,
+                  flex: 3,
+                  child: Text(
+                    movie.overView,
+                    maxLines: 7,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ],
             ),
