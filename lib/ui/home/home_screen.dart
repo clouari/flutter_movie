@@ -14,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Movie> _movies = [];
+  List<Movie> _originMovies = [];
 
   final _api = MovieApi();
   final _textEditingController = TextEditingController();
@@ -31,9 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _showResult(String query) async {
-    List<Movie> movies = await _api.fetchMovies(query);
+    _originMovies = await _api.fetchMovies(query);
     setState(() {
-      _movies = movies;
+      _movies = _originMovies;
     });
   }
 
@@ -46,10 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()),
-              );
+              _showResult('');
               // reset 아이콘 눌렀을 때에는 검색페이지로 다시 돌아오게 함.
             },
             icon: const Icon(
@@ -61,6 +59,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         children: [
           _buildTextField(),
+          const SizedBox(
+            height: 8,
+          ),
           Expanded(
             child: _buildGridView(),
           ),
@@ -73,9 +74,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return TextField(
       controller: _textEditingController,
       decoration: InputDecoration(
+        // border: InputBorder.none,
+        // border가 보이지 않게 함
         suffix: IconButton(
           onPressed: () {
-            _movies = _movies
+            _movies = _originMovies
                 .where((e) => e.title.contains(_textEditingController.text))
                 .toList();
             setState(() {});
