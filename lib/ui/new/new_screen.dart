@@ -16,13 +16,14 @@ class NewScreen extends StatelessWidget {
       ),
       otherAccountsPictures: <Widget>[
         CircleAvatar(
-          backgroundColor: Colors.yellow,
-          child: Text('⭐️'),
+          child: Icon(
+            Icons.task_alt_outlined,
+          ),
         ),
         CircleAvatar(
-          backgroundColor: Colors.red,
-          child: Text('🤍'),
-        )
+            child: Icon(
+          Icons.favorite_outlined,
+        ))
       ],
     );
     final drawerItems = ListView(
