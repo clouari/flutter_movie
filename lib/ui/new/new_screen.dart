@@ -21,9 +21,10 @@ class NewScreen extends StatelessWidget {
           ),
         ),
         CircleAvatar(
-            child: Icon(
-          Icons.favorite_outlined,
-        ))
+          child: Icon(
+            Icons.favorite_outlined,
+          ),
+        ),
       ],
     );
     final drawerItems = ListView(
